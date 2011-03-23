@@ -16,19 +16,14 @@ class User < ActiveRecord::Base
   # login can be either username or email address
   def self.authenticate(login, pass)
     user = find_by_username(login) || find_by_email(login)
-    return user if user && user.password_hash == user.encrypt_password(pass)
-  end
-
-  def encrypt_password(pass)
-    BCrypt::Engine.hash_secret(pass, password_salt)
+    return user if user && BCrypt::Password.new(user.password_hash) == pass
   end
 
   private
 
   def prepare_password
     unless password.blank?
-      self.password_salt = BCrypt::Engine.generate_salt
-      self.password_hash = encrypt_password(password)
+      self.password_hash = BCrypt::Password.create(password)
     end
   end
 end
