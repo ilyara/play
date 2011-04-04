@@ -1,7 +1,8 @@
 class SessionsController < ApplicationController
   def new
     if not session[:user_id].nil?
-      redirect_to root_url, :notice => "You are already logged in."
+      redirect_to root_url
+      gflash :notice => "You are already logged in."
     end
   end
 
