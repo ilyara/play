@@ -35,3 +35,4 @@ gem "mocha", :group => :test
 gem "bcrypt-ruby", :require => "bcrypt"
 
 gem 'gritter'
+gem 'jquery-rails'
